@@ -41,21 +41,20 @@ def quadratic_fit(x, a, b, c):
 xdata = np.array([i * 1000 for i in range(1, 11)])
 ydata = np.array([])
 
-for i in range(1, 11):
-    length = 1000 * i
+for length in xdata:
     duration = 0
     print("Anzahl zu sortierender Elemente:", length)
     for j in range(10):
         dataset = generate_dataset(length)
         duration += measure_time_ns(Bubblesort, dataset)
     duration /= 10
-    ydata = np.append(ydata, duration / 10e9)
+    ydata = np.append(ydata, duration)
 
-plt.plot(xdata, ydata, label='data')
+plt.plot(xdata, ydata, label='Daten')
 popt, pcov = curve_fit(quadratic_fit, xdata, ydata)
-plt.plot(xdata, quadratic_fit(xdata, *popt), label='fit: a=%5.3f, b=%5.3f, c=%5.3f' % tuple(popt))
+plt.plot(xdata, quadratic_fit(xdata, *popt), label='Fit: a=%5.3f, b=%5.3f, c=%5.3f' % tuple(popt))
 
-plt.xlabel('x in total length of data')
-plt.ylabel('y in seconds')
+plt.xlabel('x (Länge des Datensatzes)')
+plt.ylabel('y in Nanosekunden')
 plt.legend()
 plt.show()
