@@ -28,20 +28,25 @@ def exponential_fit(x, a, b):
     return a * b ** x
 
 xdata = np.array([i for i in range(3, 31)])
-ydata = np.array([])
+ydata_rek = np.array([])
+ydata_it = np.array([])
 
 for x in range(3, 31):
     assert(Fib_it(x) == Fib_rek(x))
 
 for index in xdata:
-    duration = 0
+    duration_rek = 0
+    duration_it = 0
     print(f"Berechung der {index}ten Fibonacci-Zahl")
-    duration += measure_time_ns(Fib_rek, index)
-    ydata = np.append(ydata, duration)
+    duration_rek += measure_time_ns(Fib_rek, index)
+    duration_it += measure_time_ns(Fib_it, index)
+    ydata_rek = np.append(ydata_rek, duration_rek)
+    ydata_it = np.append(ydata_it, duration_it)
 
-plt.plot(xdata, ydata, label='Daten')
-popt, pcov = curve_fit(exponential_fit, xdata, ydata)
-plt.plot(xdata, exponential_fit(xdata, *popt), label='Fit: a=%5.3f, b=%5.3f' % tuple(popt))
+plt.plot(xdata, ydata_rek, label='Daten rekursiv')
+plt.plot(xdata, ydata_it, label="Daten iterativ")
+popt, pcov = curve_fit(exponential_fit, xdata, ydata_rek)
+plt.plot(xdata, exponential_fit(xdata, *popt), label='Fit rekursiv: y = %5.3f * %5.3f ^ x' % tuple(popt))
 
 plt.xlabel('x')
 plt.ylabel('y in Nanosekunden')

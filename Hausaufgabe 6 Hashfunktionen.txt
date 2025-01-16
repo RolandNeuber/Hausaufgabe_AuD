@@ -1,0 +1,4 @@
+f: ungeeignet, benachbarte Werte habe gleichen Hashwert.
+g: ungeeignet, produziert nur gerade Hashwerte, somit ungleichmäßige Nutzung des Wertebereichs (keine Surjektivität).
+h: ungeeignet, da m gleich der Basis des Zahlensystems der Schlüssel (10) ist und nicht prim.
+i: gut geeignet, da der Divisor m die Basis des Zahlensystems der Schlüssel nicht teilt, Hashwerte gleichmäßig verteilt sind und benachbarte Zahlen nicht den gleichen Hashwert haben.

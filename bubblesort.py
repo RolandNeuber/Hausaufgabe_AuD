@@ -5,6 +5,16 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 def Bubblesort(array):
+    # Bubblesort sortiert Datensätze wie folgt:
+    # Für jedes Element findet ein Durchlauf statt.
+    # In jedem Durchlauf wird das jeweils größte Element im unsortierten Teil der Liste gesucht 
+    # und an das Ende des unsortierten Teils verschoben.
+    # Der sortierte Teil am Ende der Liste ist Anfang 0 Element lang
+    # und wächst mit jedem Durchlauf um 1.
+    # Jedem Durchlauf werden alle benachbarten Element im unsortierten Teil der Liste 
+    # von nacheinander von vorne nach hinten verglichen und vertauscht, falls 
+    # das Nachfolgeelement größer ist als das Vorgängerelement.
+
     # Pseudocode
     # for i in 0..array_length
     #    for j in 0..(array_length - i - 1)
@@ -52,7 +62,7 @@ for length in xdata:
 
 plt.plot(xdata, ydata, label='Daten')
 popt, pcov = curve_fit(quadratic_fit, xdata, ydata)
-plt.plot(xdata, quadratic_fit(xdata, *popt), label='Fit: a=%5.3f, b=%5.3f, c=%5.3f' % tuple(popt))
+plt.plot(xdata, quadratic_fit(xdata, *popt), label='Fit: y = %5.3f * x² + %5.3f * x + %5.3f' % tuple(popt))
 
 plt.xlabel('x (Länge des Datensatzes)')
 plt.ylabel('y in Nanosekunden')
