@@ -32,13 +32,15 @@ vertices_x = np.array([(random() * 40) for _ in range(point_count)])
 vertices_y = np.array([(random() * 40) for _ in range(point_count)])
 
 T_0 = 10
-k_max = 100000
-decay = 0.01
+k_max = 10000
+decay = 0.001
 
 T = T_0
 current_order = [i for i in range(point_count)]
 best_order = deepcopy(current_order)
 E_0 = target_func(best_order, vertices_x, vertices_y)
+iter_without_change = 0
+needed_iterations = k_max - 1
 
 for k in range(k_max):
     new_order = deepcopy(current_order)
@@ -49,10 +51,19 @@ for k in range(k_max):
         current_order = deepcopy(new_order)
         best_order = deepcopy(new_order)
         E_0 = E_1
+        iter_without_change = 0
     elif prob_distr(d_E, T) > random():
         current_order = deepcopy(new_order)
         E_0 = E_1
-    T = T_0 / (1 + k * decay)
+    else:
+        iter_without_change += 1
+    
+    if iter_without_change > 500:
+        needed_iterations = k
+        break
+    T *= (1 - decay)
+    
+print("needed iterations: " + str(needed_iterations))
 
 ordered_x = [vertices_x[i] for i in best_order] + [vertices_x[best_order[0]]]
 ordered_y = [vertices_y[i] for i in best_order] + [vertices_y[best_order[0]]]
