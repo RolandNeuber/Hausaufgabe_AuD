@@ -22,12 +22,12 @@ def swap_points(order):
     b = randint(0, len(order) - 1)
     while b == a:
         b = randint(0, len(order) - 1)
-    order[a], order[b] = order[b], order[a]
+    order[a:b] = order[a:b][::-1]
 
 def prob_distr(d_E, T):
     return exp(-d_E / T)
 
-point_count = 15
+point_count = 50
 
 fig, ax = plt.subplots()
 ax.set_xlim(0, 40)
@@ -52,9 +52,9 @@ def update(frame):
     line.set_data(ordered_x, ordered_y)
     return line,
 
-T_0 = 10
-k_max = 100000
-decay = 0.9999
+T_0 = 1000
+k_max = 1000000
+decay = 0.999
 
 T = T_0
 best_order = deepcopy(current_order)
@@ -86,6 +86,7 @@ for k in range(k_max):
     T *= decay
     
 print("needed iterations: " + str(needed_iterations))
+print("final temperature: " + str(T))
 
 ani = animation.FuncAnimation(fig, update, frames=len(all_orders), interval=10, blit=True, repeat=False)
 plt.show()
