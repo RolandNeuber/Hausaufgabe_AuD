@@ -110,20 +110,27 @@ for similarity in similarity_list:
 V = np.array(embeddings)
 origin = np.zeros((2, len(V)))  # Origin at (0,0) for all vectors
 
-# Create the quiver plot
-plt.figure(figsize=(6,6))
-plt.quiver(*origin, V[:,0], V[:,1], color='gray', scale=2)
+# Create the figure and axis
+fig, ax = plt.subplots(figsize=(6,6))
+
+# Draw the quiver plot
+ax.quiver(*origin, V[:,0], V[:,1], color="gray", scale=2)
 
 # Add labels near the arrow tips
 for i, (x, y) in enumerate(V):
-    plt.text(x, y, f'{animals[i].name}', fontsize=12, color='black', ha='left', va='bottom')
+    ax.text(x, y, f'{animals[i].name}', fontsize=12, color='black', ha='left', va='bottom')
+
+# Draw a unit circle
+unit_circle = plt.Circle((0, 0), 1, color='red', fill=False, linestyle='dashed', linewidth=1.5)
+ax.add_patch(unit_circle)
 
 # Set limits and labels
-plt.xlim(-1, 1)
-plt.ylim(-1, 1)
-plt.axhline(0, color='black', linewidth=0.5)
-plt.axvline(0, color='black', linewidth=0.5)
-plt.grid(True, linestyle='--')
-plt.title("Quiver Plot with Labels")
+ax.set_xlim(-1, 1)
+ax.set_ylim(-1, 1)
+ax.axhline(0, color='black', linewidth=0.5)
+ax.axvline(0, color='black', linewidth=0.5)
+ax.set_aspect('equal')  # Ensure the aspect ratio is equal
+ax.grid(True, linestyle='--')
+ax.set_title("Quiver Plot with Unit Circle")
 
 plt.show()
